@@ -1,0 +1,4 @@
+suites:
+    global:
+        namespace: Aa\AkeneoFixtureLoader
+        psr4_prefix: Aa\AkeneoFixtureLoader
