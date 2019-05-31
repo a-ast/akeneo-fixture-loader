@@ -13,7 +13,7 @@ class NameParser
 
         if (1 === preg_match('/^([\w-]*)_{(\d*)..(\d*)}$/', $name, $matches)) {
 
-            return Loop::create($matches[1], $matches[2], $matches[3]);
+            return Loop::create($matches[1], (int)$matches[2], (int)$matches[3]);
 
         }
 
