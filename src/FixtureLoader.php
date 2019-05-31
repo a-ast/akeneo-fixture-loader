@@ -1,13 +1,13 @@
 <?php
 
-namespace Aa\AkeneoFixtureLoader\Loader;
+namespace Aa\AkeneoFixtureLoader;
 
 use Aa\AkeneoDataLoader\LoaderInterface;
 use Aa\AkeneoFixtureLoader\Parser\NameParser;
 use Aa\AkeneoFixtureLoader\Parser\Node\Loop;
 use Traversable;
 
-class Loader
+class FixtureLoader
 {
     /**
      * @var LoaderInterface
@@ -26,7 +26,7 @@ class Loader
         $this->parser = new NameParser();
     }
 
-    public function load(iterable $fixtures)
+    public function loadData(iterable $fixtures)
     {
         foreach ($fixtures as $name => $fixture) {
 
