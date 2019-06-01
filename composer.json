@@ -20,7 +20,8 @@
     },
     "require": {
         "php": ">=7.2",
-        "aa/akeneo-data-loader": "@dev"
+        "aa/akeneo-data-loader": "@dev",
+        "fzaninotto/faker": "^1.9@dev"
     },
     "require-dev": {
         "phpspec/phpspec": "^5.1",
