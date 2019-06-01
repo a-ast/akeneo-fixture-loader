@@ -23,7 +23,7 @@ $apiCredentials = Api\Credentials::create('https://your.akeneo.host/', 'clientId
 $loaderFactory = new FixtureLoaderFactory();
 $loader = $factory->createByCredentials($apiCredentials);
 
-$loader->loadData('product', [
+$loader->loadData([
                              
     'product_{1..10}' => [
         'identifier' => 'test-<ean8()>',
