@@ -42,10 +42,8 @@ class FixtureLoader
 
             if ($node instanceof Loop) {
 
-                $resolvedFixture = $this->resolver->resolve($fixture);
-
                 $nodeName = $node->getName();
-                $this->dataLoader->load($nodeName, $this->loop($node, $resolvedFixture));
+                $this->dataLoader->load($nodeName, $this->loop($node, $fixture));
             }
         }
     }
@@ -53,7 +51,10 @@ class FixtureLoader
     private function loop(Loop $loop, array $fixture): Traversable
     {
         for ($i = $loop->getStartIndex(); $i <= $loop->getStopIndex(); $i++) {
-            yield $fixture;
+
+            $resolvedFixture = $this->resolver->resolve($fixture);
+
+            yield $resolvedFixture;
         }
     }
 }

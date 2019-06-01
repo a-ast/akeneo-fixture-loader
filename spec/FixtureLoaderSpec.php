@@ -16,7 +16,7 @@ class FixtureLoaderSpec extends ObjectBehavior
 
         $fixtureData  = ['color' => 'green'];
 
-        $resolver->resolve($fixtureData)->willReturn($fixtureData)->shouldBeCalled();
+        $resolver->resolve($fixtureData)->willReturn($fixtureData)->shouldBeCalledTimes(5);
 
         $this->loadData(['apple_{1..5}' => $fixtureData]);
 
