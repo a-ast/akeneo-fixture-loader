@@ -5,6 +5,7 @@ namespace Aa\AkeneoFixtureLoader;
 use Aa\AkeneoDataLoader\LoaderInterface;
 use Aa\AkeneoFixtureLoader\Parser\NameParser;
 use Aa\AkeneoFixtureLoader\Parser\Node\Loop;
+use Aa\AkeneoFixtureLoader\Fixture\FixtureResolver;
 use Traversable;
 
 class FixtureLoader
@@ -15,13 +16,20 @@ class FixtureLoader
     private $dataLoader;
 
     /**
+     * @var FixtureResolver
+     */
+    private $resolver;
+
+    /**
      * @var NameParser
      */
     private $parser;
 
-    public function __construct(LoaderInterface $dataLoader)
+    public function __construct(LoaderInterface $dataLoader, FixtureResolver $resolver)
     {
         $this->dataLoader = $dataLoader;
+
+        $this->resolver = $resolver;
 
         $this->parser = new NameParser();
     }
@@ -33,7 +41,11 @@ class FixtureLoader
             $node = $this->parser->parse($name);
 
             if ($node instanceof Loop) {
-                $this->dataLoader->load($node->getName(), $this->loop($node, $fixture));
+
+                $resolvedFixture = $this->resolver->resolve($fixture);
+
+                $nodeName = $node->getName();
+                $this->dataLoader->load($nodeName, $this->loop($node, $resolvedFixture));
             }
         }
     }

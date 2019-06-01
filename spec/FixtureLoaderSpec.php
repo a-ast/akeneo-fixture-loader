@@ -3,18 +3,20 @@
 namespace spec\Aa\AkeneoFixtureLoader;
 
 use Aa\AkeneoDataLoader\LoaderInterface;
+use Aa\AkeneoFixtureLoader\Fixture\FixtureResolver;
 use PhpSpec\ObjectBehavior;
 use Webmozart\Assert\Assert;
 
 class FixtureLoaderSpec extends ObjectBehavior
 {
-    function it_loads_data_in_loop()
+    function it_loads_data_in_loop(FixtureResolver $resolver)
     {
         $spyLoader = new SpyLoader();
-        $this->beConstructedWith($spyLoader);
+        $this->beConstructedWith($spyLoader, $resolver);
 
         $fixtureData  = ['color' => 'green'];
 
+        $resolver->resolve($fixtureData)->willReturn($fixtureData)->shouldBeCalled();
 
         $this->loadData(['apple_{1..5}' => $fixtureData]);
 
