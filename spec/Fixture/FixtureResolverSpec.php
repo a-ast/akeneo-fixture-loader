@@ -4,9 +4,11 @@ namespace spec\Aa\AkeneoFixtureLoader\Fixture;
 
 use Aa\AkeneoFixtureLoader\Expression\LocalizedResolver;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 
 class FixtureResolverSpec extends ObjectBehavior
 {
+
     function let(LocalizedResolver $resolver)
     {
         $this->beConstructedWith($resolver);
@@ -16,7 +18,8 @@ class FixtureResolverSpec extends ObjectBehavior
     {
         $fixture = [
             'a' => [
-                'a0', 'a1',
+                'a0',
+                'a1',
             ],
             'b' => [
                 0 => 'b0',
@@ -31,14 +34,28 @@ class FixtureResolverSpec extends ObjectBehavior
         $resolver->resolve('c1', '')->shouldBeCalled()->willReturn('z1');
         $resolver->resolve('c2', '')->shouldBeCalled()->willReturn('z2');
 
-        $this->resolve($fixture)->shouldBeLike([
-            'a' => [
-                'x0', 'x1',
-            ],
-            'b' => [
-                0 => 'y0',
-                1 => ['z0', 'z1', 'z2'],
-            ],
-        ]);
+        $this->resolve($fixture)->shouldBeLike(
+            [
+                'a' => [
+                    'x0',
+                    'x1',
+                ],
+                'b' => [
+                    0 => 'y0',
+                    1 => ['z0', 'z1', 'z2'],
+                ],
+            ]
+        );
+    }
+
+    function it_dosn_not_resolve_null_values(LocalizedResolver $resolver)
+    {
+        $fixture = [
+            'a' => null,
+        ];
+
+        $resolver->resolve(Argument::type('string'), Argument::type('string'))->shouldNotBeCalled();
+
+        $this->resolve($fixture)->shouldBeLike($fixture);
     }
 }
