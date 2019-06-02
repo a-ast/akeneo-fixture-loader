@@ -14,7 +14,7 @@ class LocalizedResolver
         $this->registry = $registry;
     }
 
-    public function resolve(string $expression, string $locale)
+    public function resolve(?string $expression, string $locale)
     {
         $resolver = $this->registry->get($locale);
 
