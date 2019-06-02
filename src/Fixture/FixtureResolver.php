@@ -33,6 +33,10 @@ class FixtureResolver
                 continue;
             }
 
+            if (null === $item) {
+                continue;
+            }
+
             $item = $this->resolver->resolve($item, $locale);
         }
     }

@@ -16,7 +16,7 @@ class Resolver
         $this->faker = $faker;
     }
 
-    public function resolve(?string $expression)
+    public function resolve(string $expression)
     {
         return preg_replace_callback('/\<\s?(\w+)\(([^\)]*)\)\s?\>/', [$this, 'fake'], $expression);
     }
