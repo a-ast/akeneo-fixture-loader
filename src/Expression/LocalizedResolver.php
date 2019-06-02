@@ -2,6 +2,8 @@
 
 namespace Aa\AkeneoFixtureLoader\Expression;
 
+use Aa\AkeneoFixtureLoader\Fixture\LoaderContext;
+
 class LocalizedResolver
 {
     /**
@@ -14,10 +16,10 @@ class LocalizedResolver
         $this->registry = $registry;
     }
 
-    public function resolve(string $expression, string $locale)
+    public function resolve(string $expression, string $locale, LoaderContext $context)
     {
         $resolver = $this->registry->get($locale);
 
-        return $resolver->resolve($expression);
+        return $resolver->resolve($expression, $context);
     }
 }

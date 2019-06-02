@@ -4,7 +4,9 @@ namespace spec\Aa\AkeneoFixtureLoader;
 
 use Aa\AkeneoDataLoader\LoaderInterface;
 use Aa\AkeneoFixtureLoader\Fixture\FixtureResolver;
+use Aa\AkeneoFixtureLoader\Fixture\LoaderContext;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 use Webmozart\Assert\Assert;
 
 class FixtureLoaderSpec extends ObjectBehavior
@@ -16,7 +18,7 @@ class FixtureLoaderSpec extends ObjectBehavior
 
         $fixtureData  = ['color' => 'green'];
 
-        $resolver->resolve($fixtureData)->willReturn($fixtureData)->shouldBeCalledTimes(5);
+        $resolver->resolve($fixtureData, Argument::type('string'), Argument::type(LoaderContext::class))->willReturn($fixtureData)->shouldBeCalledTimes(5);
 
         $this->loadData(['apple_{1..5}' => $fixtureData]);
 

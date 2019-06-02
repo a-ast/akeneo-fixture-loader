@@ -16,19 +16,19 @@ class FixtureResolver
         $this->resolver = $resolver;
     }
 
-    public function resolve(array $fixture, string $locale = ''): array
+    public function resolve(array $fixture, string $locale, LoaderContext $context): array
     {
-        $this->recursiveResolve($fixture, $locale);
+        $this->recursiveResolve($fixture, $locale, $context);
 
         return $fixture;
     }
 
-    private function recursiveResolve(array &$fixture, string $locale)
+    private function recursiveResolve(array &$fixture, string $locale, LoaderContext $context)
     {
         foreach ($fixture as &$item)
         {
             if (is_array($item)) {
-                $this->recursiveResolve($item, $locale);
+                $this->recursiveResolve($item, $locale, $context);
 
                 continue;
             }
@@ -37,7 +37,7 @@ class FixtureResolver
                 continue;
             }
 
-            $item = $this->resolver->resolve($item, $locale);
+            $item = $this->resolver->resolve($item, $locale, $context);
         }
     }
 }

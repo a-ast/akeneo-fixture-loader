@@ -3,6 +3,7 @@
 namespace spec\Aa\AkeneoFixtureLoader\Fixture;
 
 use Aa\AkeneoFixtureLoader\Expression\LocalizedResolver;
+use Aa\AkeneoFixtureLoader\Fixture\LoaderContext;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -27,14 +28,18 @@ class FixtureResolverSpec extends ObjectBehavior
             ],
         ];
 
-        $resolver->resolve('a0', '')->shouldBeCalled()->willReturn('x0');
-        $resolver->resolve('a1', '')->shouldBeCalled()->willReturn('x1');
-        $resolver->resolve('b0', '')->shouldBeCalled()->willReturn('y0');
-        $resolver->resolve('c0', '')->shouldBeCalled()->willReturn('z0');
-        $resolver->resolve('c1', '')->shouldBeCalled()->willReturn('z1');
-        $resolver->resolve('c2', '')->shouldBeCalled()->willReturn('z2');
+        $context = LoaderContext::create('1');
 
-        $this->resolve($fixture)->shouldBeLike(
+        $resolver->resolve('a0', 'en_GB', $context)->shouldBeCalled()->willReturn('x0');
+        $resolver->resolve('a1', 'en_GB', $context)->shouldBeCalled()->willReturn('x1');
+        $resolver->resolve('b0', 'en_GB', $context)->shouldBeCalled()->willReturn('y0');
+        $resolver->resolve('c0', 'en_GB', $context)->shouldBeCalled()->willReturn('z0');
+        $resolver->resolve('c1', 'en_GB', $context)->shouldBeCalled()->willReturn('z1');
+        $resolver->resolve('c2', 'en_GB', $context)->shouldBeCalled()->willReturn('z2');
+
+        $this
+            ->resolve($fixture, 'en_GB', $context)
+            ->shouldBeLike(
             [
                 'a' => [
                     'x0',
@@ -48,7 +53,7 @@ class FixtureResolverSpec extends ObjectBehavior
         );
     }
 
-    function it_dosn_not_resolve_null_values(LocalizedResolver $resolver)
+    function it_does_not_resolve_null_values(LocalizedResolver $resolver)
     {
         $fixture = [
             'a' => null,
@@ -56,6 +61,8 @@ class FixtureResolverSpec extends ObjectBehavior
 
         $resolver->resolve(Argument::type('string'), Argument::type('string'))->shouldNotBeCalled();
 
-        $this->resolve($fixture)->shouldBeLike($fixture);
+        $this
+            ->resolve($fixture, 'en_GB', LoaderContext::create('1'))
+            ->shouldBeLike($fixture);
     }
 }
