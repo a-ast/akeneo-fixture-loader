@@ -22,9 +22,9 @@ class FixtureLoaderFactory
 
     public function createByCredentials(Credentials $apiCredentials, Configuration $configuration = null): FixtureLoader
     {
-        $loaderFactory = new LoaderFactory();
+        $loaderFactory = new LoaderFactory($configuration);
 
-        $loader = $loaderFactory->createByCredentials($apiCredentials, $configuration);
+        $loader = $loaderFactory->createByCredentials($apiCredentials);
 
         return $this->create($loader);
     }
