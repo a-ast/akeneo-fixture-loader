@@ -23,6 +23,8 @@ class FixtureLoaderFactorySpec extends ObjectBehavior
         $credentials->getUsername()->willReturn('user');
         $credentials->getPassword()->willReturn('pass');
 
+        $configuration->getUploadDir()->willReturn('/upload');
+
         $this
             ->createByCredentials($credentials, $configuration)
             ->shouldHaveType(FixtureLoader::class);
